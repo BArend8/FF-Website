@@ -71,15 +71,15 @@ const defaults = {
   navGallery: "Gallery",
   navReviews: "Reviews",
   navContact: "Contact",
-  heroKicker: "Black and red premium detailing",
+  heroKicker: "Premium mobile detailing service",
   heroTitle: "Make your car look freshly delivered again.",
-  heroText: "Paint-safe washes, interior resets, ceramic protection, and finishing work for drivers who care about the details.",
+  heroText: "Paint-safe washes, interior resets, Wax finishes, and finishing work for drivers who care about the details.",
   primaryCta: "Book a detail",
   secondaryCta: "View packages",
   heroImage: "assets/detail-bay.svg",
   servicesKicker: "Packages",
   servicesTitle: "Choose the finish your vehicle deserves.",
-  servicesIntro: "Edit these packages, prices, descriptions, and labels from the admin panel whenever your offers change.",
+  servicesIntro: "Condition of vehicle has no effect on price. The vehicles final look is a reflection of the package chosen.",
   aboutKicker: "Meet the detailer",
   aboutTitle: "A little about the person behind the polish.",
   aboutText: "I started this business because clean cars are personal. Every vehicle gets careful prep, honest communication, and the kind of finish I would want on my own ride.",
@@ -93,13 +93,13 @@ const defaults = {
   reviewsTitle: "Customers notice the difference.",
   contactKicker: "Book now",
   contactTitle: "Ready for a sharper finish?",
-  contactText: "Send your vehicle, preferred package, and a few photos. We will reply with timing and a quote.",
-  phoneLabel: "(555) 012-3456",
-  phoneHref: "+15550123456",
-  emailLabel: "book@freshfinishes.com",
-  emailHref: "book@freshfinishes.com",
-  addressLabel: "Detroit metro area",
-  hoursLabel: "Mon-Sat, 8 AM-6 PM",
+  contactText: "Text or email your vehicle and preferred package. We will figure out the best day that works for you.",
+  phoneLabel: "(269) 769-4425",
+  phoneHref: "+12697694425",
+  emailLabel: "freshfinishesdetail@gmail.com",
+  emailHref: "freshfinishesdetail@gmail.com",
+  addressLabel: "Berrien County, MI",
+  hoursLabel: "Mon-Sat, 8 AM-6 PM (By appointment)",
   formNameLabel: "Name",
   formVehicleLabel: "Vehicle",
   formServiceLabel: "Service wanted",
@@ -115,34 +115,56 @@ const defaults = {
     muted: "#b7b0aa"
   },
   stats: [
-    { value: "5-star", label: "detail experience" },
+    { value: "5-star", label: "5-Star, commercial-grade products" },
     { value: "Paint-safe", label: "wash methods" },
-    { value: "Mobile", label: "or shop service" }
+    { value: "Mobile", label: "We come to you" }
   ],
   aboutPoints: ["Owner-operated service", "Paint-safe process", "Clear quotes before work starts"],
   highlights: ["Exterior details", "Interior resets", "Ceramic protection", "Fleet-ready cleaning"],
   services: [
     {
-      name: "Essential Wash",
-      price: "From $95",
-      description: "A careful exterior refresh for weekly drivers that need a clean, glossy reset.",
-      features: ["Foam pre-soak", "Hand wash", "Wheel faces", "Tire dressing"],
+      name: "Basic Interior",
+      price: "From $120",
+      description: "1.5 Hours - 2 Hours",
+      features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass"],
       featured: false
     },
     {
-      name: "Full Detail",
-      price: "From $225",
-      description: "Inside-and-out cleaning for vehicles that need deeper attention and a sharper finish.",
-      features: ["Exterior wash", "Interior deep clean", "Steam touch points", "Spray sealant"],
-      featured: true
+      name: "Basic Package",
+      price: "From $170",
+      description: "2 Hours - 2.5 Hours",
+      features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning"],
+      featured: false
     },
     {
-      name: "Ceramic Protection",
-      price: "From $650",
-      description: "Gloss, slickness, and longer-lasting protection for paint that deserves the premium treatment.",
-      features: ["Decon wash", "Paint prep", "Machine polish", "Ceramic coating"],
+      name: "Premium Interior",
+      price: "From $165",
+      description: "2.5 Hours - 3 Hours",
+      features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Water vacuum mixed with our stain remover on all cloth", "UV protectant coating on all vinyl and plastics", "Leather conditioning", "Attention to specific interior eye sores"],
+      featured: false
+    },
+     {
+      name: "Premium Exterior",
+      price: "From $85",
+      description: "1 Hours",
+      features: ["Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores"],
+      featured: false
+    },
+     {
+      name: "Premium Package",
+      price: "From $250",
+      description: "3.5 Hours - 4 Hours",
+      features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Water vacuum mixed with our stain remover on all cloth", "UV protectant coating on all vinyl and plastics", "Leather conditioning", "Attention to specific interior eye sores", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores"],
+      featured: false
+    },
+    {
+      name: "Wax Coating",
+      price: "From $250",
+      description: "4.5 Hours - 5 Hours",
+      features: ["Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores", "Hand-applied premium wax coating on entire exterior paint"],
       featured: false
     }
+    
   ],
   process: [
     { title: "Request a quote", text: "Tell us about the vehicle, condition, location, and package you want." },
