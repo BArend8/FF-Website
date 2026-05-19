@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Redline Auto Detailing</title>
+    <meta name="description" content="Premium mobile and studio car detailing services.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Home">
+        <span class="brand-mark" data-bind="businessInitials">RA</span>
+        <span>
+          <strong data-bind="businessName">Redline Auto Detailing</strong>
+          <small data-bind="businessTagline">Deep gloss. Clean finish. Every time.</small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#about" data-bind="navAbout">About</a>
+        <a href="#services" data-bind="navServices">Services</a>
+        <a href="#gallery" data-bind="navGallery">Gallery</a>
+        <a href="#reviews" data-bind="navReviews">Reviews</a>
+        <a href="#contact" data-bind="navContact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-pad">
+        <div class="hero-copy">
+          <p class="eyebrow" data-bind="heroKicker">Black and red premium detailing</p>
+          <h1 data-bind="heroTitle">Make your car look freshly delivered again.</h1>
+          <p class="hero-text" data-bind="heroText">
+            Paint-safe washes, interior resets, ceramic protection, and finishing work for drivers who care about the details.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#contact" data-bind="primaryCta">Book a detail</a>
+            <a class="button button-ghost" href="#services" data-bind="secondaryCta">View packages</a>
+          </div>
+          <div class="stats" id="stats"></div>
+        </div>
+
+        <div class="hero-media">
+          <img data-image="heroImage" src="assets/detail-bay.svg" alt="Detailed black sports car under red lights">
+        </div>
+      </section>
+
+      <section class="strip" aria-label="Service highlights" id="highlights"></section>
+
+      <section class="section-pad about-section" id="about">
+        <div class="about-photo">
+          <img data-image="aboutImage" src="assets/detail-bay.svg" alt="Owner portrait or detailing work">
+        </div>
+        <div class="about-copy">
+          <p class="eyebrow" data-bind="aboutKicker">Meet the detailer</p>
+          <h2 data-bind="aboutTitle">A little about the person behind the polish.</h2>
+          <p data-bind="aboutText">
+            I started this business because clean cars are personal. Every vehicle gets careful prep, honest communication, and the kind of finish I would want on my own ride.
+          </p>
+          <div class="about-points" id="aboutPoints"></div>
+        </div>
+      </section>
+
+      <section class="section-pad split" id="services">
+        <div>
+          <p class="eyebrow" data-bind="servicesKicker">Packages</p>
+          <h2 data-bind="servicesTitle">Choose the finish your vehicle deserves.</h2>
+        </div>
+        <p class="section-intro" data-bind="servicesIntro">
+          Edit these packages, prices, descriptions, and labels from the admin panel whenever your offers change.
+        </p>
+      </section>
+
+      <section class="service-grid" id="serviceGrid"></section>
+
+      <section class="section-pad process-band" id="process">
+        <div>
+          <p class="eyebrow" data-bind="processKicker">How it works</p>
+          <h2 data-bind="processTitle">A straightforward detail from first message to final wipe-down.</h2>
+        </div>
+        <div class="process-list" id="processList"></div>
+      </section>
+
+      <section class="section-pad split" id="gallery">
+        <div>
+          <p class="eyebrow" data-bind="galleryKicker">Gallery</p>
+          <h2 data-bind="galleryTitle">Recent shine folders.</h2>
+        </div>
+        <p class="section-intro" data-bind="galleryIntro">
+          Click a vehicle folder to see the photos from that specific car.
+        </p>
+      </section>
+
+      <section class="gallery-grid" id="galleryGrid"></section>
+
+      <section class="section-pad reviews" id="reviews">
+        <div>
+          <p class="eyebrow" data-bind="reviewsKicker">Reviews</p>
+          <h2 data-bind="reviewsTitle">Customers notice the difference.</h2>
+        </div>
+        <div class="review-grid" id="reviewGrid"></div>
+      </section>
+
+      <section class="section-pad contact" id="contact">
+        <div class="contact-copy">
+          <p class="eyebrow" data-bind="contactKicker">Book now</p>
+          <h2 data-bind="contactTitle">Ready for a sharper finish?</h2>
+          <p data-bind="contactText">
+            Send your vehicle, preferred package, and a few photos. We will reply with timing and a quote.
+          </p>
+          <div class="contact-methods">
+            <a data-link="phone" href="tel:+15550123456" data-bind="phoneLabel">(555) 012-3456</a>
+            <a data-link="email" href="mailto:book@redline-detailing.com" data-bind="emailLabel">book@redline-detailing.com</a>
+            <span data-bind="addressLabel">Detroit metro area</span>
+            <span data-bind="hoursLabel">Mon-Sat, 8 AM-6 PM</span>
+          </div>
+        </div>
+
+        <form class="quote-form" id="quoteForm">
+          <label>
+            <span data-bind="formNameLabel">Name</span>
+            <input name="name" autocomplete="name" required>
+          </label>
+          <label>
+            <span data-bind="formVehicleLabel">Vehicle</span>
+            <input name="vehicle" placeholder="Year, make, model" required>
+          </label>
+          <label>
+            <span data-bind="formServiceLabel">Service wanted</span>
+            <select name="service" id="serviceSelect"></select>
+          </label>
+          <label>
+            <span data-bind="formMessageLabel">Message</span>
+            <textarea name="message" rows="4" placeholder="Tell us what needs attention"></textarea>
+          </label>
+          <button class="button button-primary" type="submit" data-bind="formSubmitLabel">Create email request</button>
+          <p class="form-note" id="formNote"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span data-bind="footerText">Built for serious shine and everyday drivers.</span>
+      <button class="text-button" type="button" data-admin-open>Owner admin</button>
+    </footer>
+
+    <div class="admin-shell" id="adminShell" aria-hidden="true">
+      <div class="admin-backdrop" data-admin-close></div>
+      <aside class="admin-panel" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+        <div class="admin-top">
+          <div>
+            <p class="eyebrow">Owner controls</p>
+            <h2 id="adminTitle">Admin access</h2>
+          </div>
+          <button class="icon-button" type="button" data-admin-close aria-label="Close admin">X</button>
+        </div>
+
+        <section class="login-view" id="loginView">
+          <p>Enter the owner password to customize the whole site.</p>
+          <label>
+            <span>Password</span>
+            <input id="passwordInput" type="password" autocomplete="current-password">
+          </label>
+          <button class="button button-primary" type="button" id="loginButton">Unlock editor</button>
+          <p class="admin-message" id="loginMessage"></p>
+        </section>
+
+        <section class="editor-view" id="editorView" hidden>
+          <div class="admin-actions">
+            <button class="button button-primary" type="button" id="saveButton">Save changes</button>
+            <button class="button button-ghost" type="button" id="previewButton">Apply preview</button>
+            <button class="button danger" type="button" id="resetButton">Reset site</button>
+          </div>
+          <p class="admin-message" id="adminStatus" aria-live="polite"></p>
+          <nav class="admin-tabs" id="adminTabs" aria-label="Admin sections"></nav>
+          <div id="adminFields"></div>
+        </section>
+      </aside>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

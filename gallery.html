@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gallery | Redline Auto Detailing</title>
+    <meta name="description" content="Vehicle photo gallery for completed detailing work.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html#top" aria-label="Home">
+        <span class="brand-mark" data-bind="businessInitials">RA</span>
+        <span>
+          <strong data-bind="businessName">Redline Auto Detailing</strong>
+          <small data-bind="businessTagline">Deep gloss. Clean finish. Every time.</small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html#about" data-bind="navAbout">About</a>
+        <a href="index.html#services" data-bind="navServices">Services</a>
+        <a href="index.html#gallery" data-bind="navGallery">Gallery</a>
+        <a href="index.html#reviews" data-bind="navReviews">Reviews</a>
+        <a href="index.html#contact" data-bind="navContact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section-pad album-hero">
+        <a class="back-link" href="index.html#gallery">Back to folders</a>
+        <p class="eyebrow" id="albumKicker">Vehicle folder</p>
+        <h1 id="albumTitle">Gallery</h1>
+        <p class="hero-text" id="albumDescription"></p>
+      </section>
+
+      <section class="album-grid" id="albumGrid" aria-label="Vehicle photos"></section>
+    </main>
+
+    <footer class="site-footer">
+      <span data-bind="footerText">Built for serious shine and everyday drivers.</span>
+      <button class="text-button" type="button" data-admin-open>Owner admin</button>
+    </footer>
+
+    <div class="admin-shell" id="adminShell" aria-hidden="true">
+      <div class="admin-backdrop" data-admin-close></div>
+      <aside class="admin-panel" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+        <div class="admin-top">
+          <div>
+            <p class="eyebrow">Owner controls</p>
+            <h2 id="adminTitle">Admin access</h2>
+          </div>
+          <button class="icon-button" type="button" data-admin-close aria-label="Close admin">X</button>
+        </div>
+
+        <section class="login-view" id="loginView">
+          <p>Enter the owner password to customize the whole site.</p>
+          <label>
+            <span>Password</span>
+            <input id="passwordInput" type="password" autocomplete="current-password">
+          </label>
+          <button class="button button-primary" type="button" id="loginButton">Unlock editor</button>
+          <p class="admin-message" id="loginMessage"></p>
+        </section>
+
+        <section class="editor-view" id="editorView" hidden>
+          <div class="admin-actions">
+            <button class="button button-primary" type="button" id="saveButton">Save changes</button>
+            <button class="button button-ghost" type="button" id="previewButton">Apply preview</button>
+            <button class="button danger" type="button" id="resetButton">Reset site</button>
+          </div>
+          <p class="admin-message" id="adminStatus" aria-live="polite"></p>
+          <nav class="admin-tabs" id="adminTabs" aria-label="Admin sections"></nav>
+          <div id="adminFields"></div>
+        </section>
+      </aside>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
