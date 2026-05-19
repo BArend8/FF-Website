@@ -1,13 +1,70 @@
-const STORAGE_KEY = "redline-detailing-site-v1";
-const PASSWORD_KEY = "redline-detailing-admin-password";
+// ─── Supabase config ────────────────────────────────────────────────────────
+const SUPABASE_URL = "https://belcwyvweawhjiyrenZf.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlbGN3eXZ3ZWF3aGppeXJlbnpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNTkyMzMsImV4cCI6MjA5NDczNTIzM30.9_8e7dnRCJZpNi5d3H6JTbFcUou3zFm6BSCNq3ZCKN0";
+
+async function sbFetch(path) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      "Content-Type": "application/json"
+    }
+  });
+  if (!res.ok) throw new Error(`Supabase error: ${res.status} ${res.statusText}`);
+  return res.json();
+}
+
+async function sbInsert(table, data) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: "POST",
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      "Content-Type": "application/json",
+      Prefer: "return=representation"
+    },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) throw new Error(`Supabase insert error: ${res.status} ${res.statusText}`);
+  return res.json();
+}
+
+async function sbUpdate(table, id, data) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+    method: "PATCH",
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      "Content-Type": "application/json",
+      Prefer: "return=representation"
+    },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) throw new Error(`Supabase update error: ${res.status} ${res.statusText}`);
+  return res.json();
+}
+
+async function sbDelete(table, id) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+    method: "DELETE",
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+    }
+  });
+  if (!res.ok) throw new Error(`Supabase delete error: ${res.status} ${res.statusText}`);
+}
+
+// ─── Constants ───────────────────────────────────────────────────────────────
+const PASSWORD_KEY = "fresh-finishes-admin-password";
 const DEFAULT_PASSWORD = "DetailBoss2026!";
 const UPLOAD_MAX_SIZE = 1400;
 const UPLOAD_QUALITY = 0.78;
 
+// ─── Hard-coded defaults (everything except galleryFolders & reviews) ─────────
 const defaults = {
-  logoImage: "",
-  businessName: "Redline Auto Detailing",
-  businessInitials: "RA",
+  businessName: "Fresh Finishes",
+  businessInitials: "FF",
   businessTagline: "Deep gloss. Clean finish. Every time.",
   navAbout: "About",
   navServices: "Services",
@@ -39,8 +96,8 @@ const defaults = {
   contactText: "Send your vehicle, preferred package, and a few photos. We will reply with timing and a quote.",
   phoneLabel: "(555) 012-3456",
   phoneHref: "+15550123456",
-  emailLabel: "book@redline-detailing.com",
-  emailHref: "book@redline-detailing.com",
+  emailLabel: "book@freshfinishes.com",
+  emailHref: "book@freshfinishes.com",
   addressLabel: "Detroit metro area",
   hoursLabel: "Mon-Sat, 8 AM-6 PM",
   formNameLabel: "Name",
@@ -91,75 +148,24 @@ const defaults = {
     { title: "Request a quote", text: "Tell us about the vehicle, condition, location, and package you want." },
     { title: "Confirm the plan", text: "We lock in timing, pricing, and any special areas that need attention." },
     { title: "Detail day", text: "Your vehicle gets a careful wash, clean, polish, or protection service." }
-  ],
-  galleryFolders: [
-    {
-      title: "Black coupe detail",
-      vehicle: "Black sports coupe",
-      description: "Exterior wash, gloss finish, wheel detail, and final inspection.",
-      coverImage: "assets/detail-bay.svg",
-      coverWidth: 520,
-      coverHeight: 260,
-      coverFit: "cover",
-      photoWidth: 260,
-      photoHeight: 190,
-      imageFit: "cover",
-      photos: [
-        { label: "Gloss finish", image: "assets/detail-bay.svg" },
-        { label: "Foam wash prep", image: "assets/foam-wash.svg" },
-        { label: "Wheel detail", image: "assets/wheel-care.svg" }
-      ]
-    },
-    {
-      title: "Interior reset",
-      vehicle: "Daily driver interior",
-      description: "Seat, trim, touch point, and cabin refresh photos from one vehicle.",
-      coverImage: "assets/interior-reset.svg",
-      coverWidth: 260,
-      coverHeight: 260,
-      coverFit: "cover",
-      photoWidth: 240,
-      photoHeight: 180,
-      imageFit: "cover",
-      photos: [
-        { label: "Interior reset", image: "assets/interior-reset.svg" },
-        { label: "Wheel care", image: "assets/wheel-care.svg" }
-      ]
-    },
-    {
-      title: "Foam wash prep",
-      vehicle: "Weekend wash package",
-      description: "Pre-soak and safe hand wash photos grouped by vehicle.",
-      coverImage: "assets/foam-wash.svg",
-      coverWidth: 260,
-      coverHeight: 260,
-      coverFit: "cover",
-      photoWidth: 240,
-      photoHeight: 180,
-      imageFit: "cover",
-      photos: [
-        { label: "Foam wash", image: "assets/foam-wash.svg" },
-        { label: "Final gloss", image: "assets/detail-bay.svg" }
-      ]
-    }
-  ],
-  reviews: [
-    { name: "Marcus R.", quote: "My truck looked better than the day I bought it. The red carpet level of care is real." },
-    { name: "Janelle T.", quote: "Fast replies, clean work, and the interior smelled brand new without being overpowering." },
-    { name: "Andre M.", quote: "The ceramic coating made the paint look deeper and washing is so much easier now." }
   ]
 };
 
-let site = loadSite();
+// ─── Runtime state ────────────────────────────────────────────────────────────
+// site holds the hard-coded fields; Supabase data is in supabaseGalleryFolders / supabaseReviews
+let site = structuredClone(defaults);
+let supabaseGalleryFolders = []; // [{id, title, vehicle, description, coverImage, coverWidth, coverHeight, coverFit, photoWidth, photoHeight, imageFit, sort_order}]
+let supabasePhotos = [];         // [{id, folder_id, label, image, sort_order}]
+let supabaseReviews = [];        // [{id, name, quote}]
 let activeTab = "Brand";
 
+// ─── Admin sections (Gallery & Reviews now managed via Supabase) ──────────────
 const sections = {
-Brand: [
+  Brand: [
     ["businessName", "Business name"],
-    ["businessInitials", "Logo initials (shown when no logo image is set)"],
+    ["businessInitials", "Logo initials"],
     ["businessTagline", "Small tagline"],
-    ["footerText", "Footer text"],
-    ["logoImage", "Logo image", "image"]
+    ["footerText", "Footer text"]
   ],
   Navigation: [
     ["navAbout", "About label"],
@@ -218,68 +224,61 @@ Brand: [
   Process: "process",
   Gallery: "gallery",
   Reviews: "reviews",
-  Security: "security",
-  Backup: "backup"
+  Security: "security"
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderSite();
+// ─── Boot ─────────────────────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", async () => {
+  renderSite(); // render hard-coded content immediately
   bindAdmin();
   bindQuoteForm();
-  setTimeout(optimizeStoredImages, 250);
+  await loadSupabaseData();
+  renderSite(); // re-render once Supabase data is in
 });
 
-function loadSite() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  const loaded = saved ? mergeDeep(structuredClone(defaults), JSON.parse(saved)) : structuredClone(defaults);
-  return normalizeSite(loaded);
-}
-
-function normalizeSite(loaded) {
-  if (!loaded.galleryFolders && Array.isArray(loaded.gallery)) {
-    loaded.galleryFolders = [{
-      title: "Recent work",
-      vehicle: "Vehicle gallery",
-      description: "Photos from one completed detail.",
-      coverImage: loaded.gallery[0]?.image || "assets/detail-bay.svg",
-      coverHeight: 260,
-      photoWidth: 240,
-      photoHeight: 180,
-      imageFit: "cover",
-      photos: loaded.gallery
-    }];
-  }
-  loaded.galleryFolders = loaded.galleryFolders.map((folder) => ({
-    title: folder.title || "Vehicle folder",
-    vehicle: folder.vehicle || "Detailed vehicle",
-    description: folder.description || "",
-    coverImage: folder.coverImage || folder.photos?.[0]?.image || "assets/detail-bay.svg",
-    coverWidth: Number(folder.coverWidth) || 260,
-    coverHeight: Number(folder.coverHeight) || 260,
-    coverFit: folder.coverFit || "cover",
-    photoWidth: Number(folder.photoWidth) || 240,
-    photoHeight: Number(folder.photoHeight) || 180,
-    imageFit: folder.imageFit || "cover",
-    photos: Array.isArray(folder.photos) && folder.photos.length ? folder.photos : [{ label: "Detail photo", image: folder.coverImage || "assets/detail-bay.svg" }]
-  }));
-  return loaded;
-}
-
-function saveSite() {
+// ─── Supabase data loading ────────────────────────────────────────────────────
+async function loadSupabaseData() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(site));
-    setAdminStatus("Saved.");
-    return true;
-  } catch {
-    setAdminStatus("Could not save. Try replacing one or two large photos with smaller versions.", true);
-    return false;
+    const [folders, photos, reviews] = await Promise.all([
+      sbFetch("gallery_folders?select=*&order=sort_order.asc,id.asc"),
+      sbFetch("gallery_photos?select=*&order=folder_id.asc,sort_order.asc,id.asc"),
+      sbFetch("reviews?select=*&order=id.asc")
+    ]);
+    supabaseGalleryFolders = folders || [];
+    supabasePhotos = photos || [];
+    supabaseReviews = reviews || [];
+  } catch (err) {
+    console.warn("Could not load Supabase data:", err.message);
+    supabaseGalleryFolders = [];
+    supabasePhotos = [];
+    supabaseReviews = [];
   }
 }
 
-function getPassword() {
-  return localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+// Build a merged folder list (folders with their photos attached) for rendering
+function buildFolders() {
+  return supabaseGalleryFolders.map((folder) => {
+    const photos = supabasePhotos
+      .filter((p) => p.folder_id === folder.id)
+      .map((p) => ({ id: p.id, label: p.label || "Photo", image: p.image || "assets/detail-bay.svg" }));
+    return {
+      id: folder.id,
+      title: folder.title || "Vehicle folder",
+      vehicle: folder.vehicle || "Detailed vehicle",
+      description: folder.description || "",
+      coverImage: folder.cover_image || (photos[0]?.image) || "assets/detail-bay.svg",
+      coverWidth: Number(folder.cover_width) || 260,
+      coverHeight: Number(folder.cover_height) || 260,
+      coverFit: folder.cover_fit || "cover",
+      photoWidth: Number(folder.photo_width) || 240,
+      photoHeight: Number(folder.photo_height) || 180,
+      imageFit: folder.image_fit || "cover",
+      photos: photos.length ? photos : [{ label: "Detail photo", image: folder.cover_image || "assets/detail-bay.svg" }]
+    };
+  });
 }
 
+// ─── Render ───────────────────────────────────────────────────────────────────
 function renderSite() {
   applyTheme();
   document.title = site.businessName;
@@ -291,18 +290,6 @@ function renderSite() {
     const key = node.dataset.image;
     if (site[key]) node.src = site[key];
   });
-  const logoImg = document.getElementById("logoImg");
-  const brandInitials = document.getElementById("brandInitials");
-  if (logoImg && brandInitials) {
-    if (site.logoImage) {
-      logoImg.src = site.logoImage;
-      logoImg.style.display = "block";
-      brandInitials.style.display = "none";
-    } else {
-      logoImg.style.display = "none";
-      brandInitials.style.display = "";
-    }
-  }
   const phoneLink = document.querySelector('[data-link="phone"]');
   const emailLink = document.querySelector('[data-link="email"]');
   if (phoneLink) phoneLink.href = `tel:${site.phoneHref}`;
@@ -387,12 +374,17 @@ function renderProcess() {
 function renderGallery() {
   const galleryGrid = document.getElementById("galleryGrid");
   if (!galleryGrid) return;
-  galleryGrid.innerHTML = site.galleryFolders.map((folder, index) => `
-    <a class="gallery-card folder-card" href="gallery.html?car=${index}" style="--cover-width:${Number(folder.coverWidth) || 260}px; --cover-height:${Number(folder.coverHeight) || 260}px; --cover-fit:${escapeAttribute(folder.coverFit || "cover")}">
+  const folders = buildFolders();
+  if (!folders.length) {
+    galleryGrid.innerHTML = `<p class="form-note" style="padding:0 clamp(18px,5vw,72px)">No gallery folders yet. Add them in the admin panel.</p>`;
+    return;
+  }
+  galleryGrid.innerHTML = folders.map((folder, index) => `
+    <a class="gallery-card folder-card" href="gallery.html?car=${index}" style="--cover-width:${folder.coverWidth}px; --cover-height:${folder.coverHeight}px; --cover-fit:${escapeAttribute(folder.coverFit)}">
       <img src="${escapeAttribute(folder.coverImage)}" alt="${escapeAttribute(folder.title)}">
       <span>
         <strong>${escapeHtml(folder.title)}</strong>
-        <small>${escapeHtml(folder.vehicle)} - ${folder.photos.length} photos</small>
+        <small>${escapeHtml(folder.vehicle)} · ${folder.photos.length} photo${folder.photos.length !== 1 ? "s" : ""}</small>
       </span>
     </a>
   `).join("");
@@ -401,19 +393,23 @@ function renderGallery() {
 function renderAlbumPage() {
   const albumGrid = document.getElementById("albumGrid");
   if (!albumGrid) return;
-  if (!site.galleryFolders.length) {
+  const folders = buildFolders();
+  if (!folders.length) {
     albumGrid.innerHTML = `<p class="form-note">No gallery folders have been added yet.</p>`;
     return;
   }
   const index = Number(new URLSearchParams(window.location.search).get("car")) || 0;
-  const folder = site.galleryFolders[index] || site.galleryFolders[0];
+  const folder = folders[index] || folders[0];
   document.title = `${folder.title} | ${site.businessName}`;
-  document.getElementById("albumKicker").textContent = folder.vehicle;
-  document.getElementById("albumTitle").textContent = folder.title;
-  document.getElementById("albumDescription").textContent = folder.description;
-  albumGrid.style.setProperty("--album-photo-width", `${Number(folder.photoWidth) || 240}px`);
-  albumGrid.style.setProperty("--album-photo-height", `${Number(folder.photoHeight) || 180}px`);
-  albumGrid.style.setProperty("--album-fit", folder.imageFit || "cover");
+  const kickerEl = document.getElementById("albumKicker");
+  const titleEl = document.getElementById("albumTitle");
+  const descEl = document.getElementById("albumDescription");
+  if (kickerEl) kickerEl.textContent = folder.vehicle;
+  if (titleEl) titleEl.textContent = folder.title;
+  if (descEl) descEl.textContent = folder.description;
+  albumGrid.style.setProperty("--album-photo-width", `${folder.photoWidth}px`);
+  albumGrid.style.setProperty("--album-photo-height", `${folder.photoHeight}px`);
+  albumGrid.style.setProperty("--album-fit", folder.imageFit);
   albumGrid.innerHTML = folder.photos.map((photo) => `
     <figure class="album-photo">
       <img src="${escapeAttribute(photo.image)}" alt="${escapeAttribute(photo.label)}">
@@ -425,7 +421,11 @@ function renderAlbumPage() {
 function renderReviews() {
   const reviewGrid = document.getElementById("reviewGrid");
   if (!reviewGrid) return;
-  reviewGrid.innerHTML = site.reviews.map((review) => `
+  if (!supabaseReviews.length) {
+    reviewGrid.innerHTML = `<p class="form-note">No reviews yet. Add them in the admin panel.</p>`;
+    return;
+  }
+  reviewGrid.innerHTML = supabaseReviews.map((review) => `
     <article class="review-card">
       <div class="stars">★★★★★</div>
       <h3>${escapeHtml(review.name)}</h3>
@@ -442,6 +442,7 @@ function renderServiceOptions() {
   `).join("");
 }
 
+// ─── Quote form ───────────────────────────────────────────────────────────────
 function bindQuoteForm() {
   const quoteForm = document.getElementById("quoteForm");
   if (!quoteForm) return;
@@ -461,6 +462,7 @@ function bindQuoteForm() {
   });
 }
 
+// ─── Admin panel ──────────────────────────────────────────────────────────────
 function bindAdmin() {
   if (!document.getElementById("adminShell")) return;
   document.querySelectorAll("[data-admin-open]").forEach((button) => {
@@ -473,22 +475,21 @@ function bindAdmin() {
   document.getElementById("passwordInput").addEventListener("keydown", (event) => {
     if (event.key === "Enter") login();
   });
-  document.getElementById("saveButton").addEventListener("click", () => {
+  document.getElementById("saveButton").addEventListener("click", async () => {
     readAdminFields();
-    saveSite();
     renderSite();
-    renderAdminFields();
+    setAdminStatus("Saved.");
   });
   document.getElementById("previewButton").addEventListener("click", () => {
     readAdminFields();
     renderSite();
   });
   document.getElementById("resetButton").addEventListener("click", () => {
-    if (!confirm("Reset the website back to the starter content?")) return;
+    if (!confirm("Reset the hard-coded site content back to defaults? Gallery and reviews in Supabase are not affected.")) return;
     site = structuredClone(defaults);
-    saveSite();
     renderSite();
     renderAdminFields();
+    setAdminStatus("Site content reset to defaults.");
   });
   renderAdminTabs();
 }
@@ -506,7 +507,6 @@ function openAdmin() {
 function closeAdmin() {
   if (!document.getElementById("editorView").hidden) {
     readAdminFields();
-    saveSite();
     renderSite();
   }
   document.getElementById("adminShell").classList.remove("is-open");
@@ -527,6 +527,10 @@ function login() {
   message.textContent = "That password did not match.";
 }
 
+function getPassword() {
+  return localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+}
+
 function renderAdminTabs() {
   document.getElementById("adminTabs").innerHTML = Object.keys(sections).map((name) => `
     <button class="tab-button ${name === activeTab ? "is-active" : ""}" type="button" data-tab="${name}">${name}</button>
@@ -534,7 +538,6 @@ function renderAdminTabs() {
   document.querySelectorAll("[data-tab]").forEach((button) => {
     button.addEventListener("click", () => {
       readAdminFields();
-      saveSite();
       activeTab = button.dataset.tab;
       renderAdminTabs();
       renderAdminFields();
@@ -556,14 +559,14 @@ function renderAdminFields() {
   if (section === "highlights") fields.innerHTML = renderHighlightFields();
   if (section === "services") fields.innerHTML = renderServicesFields();
   if (section === "process") fields.innerHTML = renderSimpleList("process", ["title", "text"]);
-  if (section === "gallery") fields.innerHTML = renderGalleryFields();
-  if (section === "reviews") fields.innerHTML = renderSimpleList("reviews", ["name", "quote"]);
+  if (section === "gallery") { fields.innerHTML = renderGalleryFields(); bindGalleryAdminButtons(); return; }
+  if (section === "reviews") { fields.innerHTML = renderReviewsFields(); bindReviewsAdminButtons(); return; }
   if (section === "security") fields.innerHTML = renderSecurityFields();
-  if (section === "backup") fields.innerHTML = renderBackupFields();
   bindAdminFieldButtons();
   bindImageInputs();
 }
 
+// ─── Admin field renderers (hard-coded sections) ──────────────────────────────
 function renderSimpleField([key, label, type = "text"]) {
   const value = getByPath(site, key) || "";
   if (type === "image") {
@@ -573,7 +576,7 @@ function renderSimpleField([key, label, type = "text"]) {
         <label><span>${label}</span><input data-image-url-field="${key}" value="${savedUpload ? "" : escapeAttribute(value)}" placeholder="${savedUpload ? "Uploaded image saved" : ""}"></label>
         <img class="image-preview" src="${escapeAttribute(value)}" alt="" loading="lazy">
         <input type="file" accept="image/*" data-image-upload="${key}">
-        <small>Paste an image URL or upload a picture. Uploads are compressed and saved right away.</small>
+        <small>Paste an image URL or upload a picture.</small>
       </div>
     `;
   }
@@ -647,96 +650,331 @@ function renderServicesFields() {
   `;
 }
 
-function renderGalleryFields() {
-  return `
-    <div class="field-group">
-      <p class="form-note">Each folder becomes a clickable vehicle card on the home page. The photos inside it show on that vehicle's gallery page.</p>
-      ${site.galleryFolders.map((folder, index) => `
-        <div class="repeat-item">
-          <div class="mini-grid">
-            <label><span>Folder title</span><input data-list-field="galleryFolders.${index}.title" value="${escapeAttribute(folder.title)}"></label>
-            <label><span>Vehicle label</span><input data-list-field="galleryFolders.${index}.vehicle" value="${escapeAttribute(folder.vehicle)}"></label>
-          </div>
-          <label><span>Folder description</span><textarea rows="3" data-list-field="galleryFolders.${index}.description">${escapeHtml(folder.description)}</textarea></label>
-          <label><span>Cover image URL</span><input data-image-url-field="galleryFolders.${index}.coverImage" value="${isDataUrl(folder.coverImage) ? "" : escapeAttribute(folder.coverImage)}" placeholder="${isDataUrl(folder.coverImage) ? "Uploaded image saved" : ""}"></label>
-          <img class="image-preview" src="${escapeAttribute(folder.coverImage)}" alt="" loading="lazy">
-          <input type="file" accept="image/*" data-image-upload="galleryFolders.${index}.coverImage">
-          <div class="mini-grid">
-            <label><span>Main folder card width</span><input type="number" min="180" max="720" data-list-field="galleryFolders.${index}.coverWidth" value="${escapeAttribute(folder.coverWidth)}"></label>
-            <label><span>Folder card height</span><input type="number" min="160" max="520" data-list-field="galleryFolders.${index}.coverHeight" value="${escapeAttribute(folder.coverHeight)}"></label>
-            <label><span>Main folder display style</span><select data-list-field="galleryFolders.${index}.coverFit"><option value="cover" ${folder.coverFit === "cover" ? "selected" : ""}>Crop to frame</option><option value="contain" ${folder.coverFit === "contain" ? "selected" : ""}>Show full photo</option></select></label>
-            <label><span>Photo display style</span><select data-list-field="galleryFolders.${index}.imageFit"><option value="cover" ${folder.imageFit === "cover" ? "selected" : ""}>Crop to frame</option><option value="contain" ${folder.imageFit === "contain" ? "selected" : ""}>Show full photo</option></select></label>
-            <label><span>Gallery photo width</span><input type="number" min="140" max="520" data-list-field="galleryFolders.${index}.photoWidth" value="${escapeAttribute(folder.photoWidth)}"></label>
-            <label><span>Gallery photo height</span><input type="number" min="120" max="420" data-list-field="galleryFolders.${index}.photoHeight" value="${escapeAttribute(folder.photoHeight)}"></label>
-          </div>
-          <div class="nested-list">
-            <strong>Photos in this folder</strong>
-            ${folder.photos.map((photo, photoIndex) => `
-              <div class="repeat-item photo-editor">
-                <label><span>Photo label</span><input data-list-field="galleryFolders.${index}.photos.${photoIndex}.label" value="${escapeAttribute(photo.label)}"></label>
-                <label><span>Photo URL</span><input data-image-url-field="galleryFolders.${index}.photos.${photoIndex}.image" value="${isDataUrl(photo.image) ? "" : escapeAttribute(photo.image)}" placeholder="${isDataUrl(photo.image) ? "Uploaded image saved" : ""}"></label>
-                <img class="image-preview" src="${escapeAttribute(photo.image)}" alt="" loading="lazy">
-                <input type="file" accept="image/*" data-image-upload="galleryFolders.${index}.photos.${photoIndex}.image">
-                <button class="button danger" type="button" data-remove-photo="${index}.${photoIndex}">Remove photo</button>
-              </div>
-            `).join("")}
-            <button class="button button-ghost" type="button" data-add-photo="${index}">Add photo to this folder</button>
-          </div>
-          <button class="button danger" type="button" data-remove="galleryFolders.${index}">Remove folder</button>
-        </div>
-      `).join("")}
-      <button class="button button-ghost" type="button" data-add="galleryFolders">Add vehicle folder</button>
-    </div>
-  `;
-}
-
 function renderSecurityFields() {
   return `
     <div class="field-group">
-      <p class="form-note">Current starter password: ${DEFAULT_PASSWORD}</p>
+      <p class="form-note">Default password: ${DEFAULT_PASSWORD}</p>
       <label><span>New admin password</span><input type="password" id="newPassword"></label>
       <button class="button button-primary" type="button" id="passwordSave">Update password</button>
-      <p class="form-note">This protects the local editor from casual changes. Use server hosting with real authentication before taking payments or storing customer data.</p>
+      <p class="form-note">Password is stored in this browser only.</p>
     </div>
   `;
 }
 
-function renderBackupFields() {
-  return `
-    <div class="field-group">
-      <label><span>Export or import all site content</span><textarea rows="10" id="backupBox">${escapeHtml(JSON.stringify(site, null, 2))}</textarea></label>
-      <div class="admin-actions">
-        <button class="button button-ghost" type="button" id="copyBackup">Refresh export</button>
-        <button class="button button-primary" type="button" id="importBackup">Import content</button>
+// ─── Gallery admin (Supabase) ─────────────────────────────────────────────────
+function renderGalleryFields() {
+  const folders = buildFolders();
+  const rows = folders.map((folder) => `
+    <div class="repeat-item" data-folder-id="${folder.id}">
+      <div class="mini-grid">
+        <label><span>Folder title</span><input class="sb-folder-field" data-folder-id="${folder.id}" data-col="title" value="${escapeAttribute(folder.title)}"></label>
+        <label><span>Vehicle label</span><input class="sb-folder-field" data-folder-id="${folder.id}" data-col="vehicle" value="${escapeAttribute(folder.vehicle)}"></label>
+      </div>
+      <label><span>Folder description</span><textarea rows="2" class="sb-folder-field" data-folder-id="${folder.id}" data-col="description">${escapeHtml(folder.description)}</textarea></label>
+      <label><span>Cover image URL</span><input class="sb-folder-field" data-folder-id="${folder.id}" data-col="cover_image" value="${isDataUrl(folder.coverImage) ? "" : escapeAttribute(folder.coverImage)}" placeholder="${isDataUrl(folder.coverImage) ? "Uploaded image saved" : ""}"></label>
+      <img class="image-preview" src="${escapeAttribute(folder.coverImage)}" alt="" loading="lazy">
+      <input type="file" accept="image/*" data-sb-folder-image="${folder.id}">
+      <div class="mini-grid">
+        <label><span>Card width</span><input type="number" min="180" max="720" class="sb-folder-field" data-folder-id="${folder.id}" data-col="cover_width" value="${folder.coverWidth}"></label>
+        <label><span>Card height</span><input type="number" min="160" max="520" class="sb-folder-field" data-folder-id="${folder.id}" data-col="cover_height" value="${folder.coverHeight}"></label>
+        <label><span>Cover fit</span><select class="sb-folder-field" data-folder-id="${folder.id}" data-col="cover_fit"><option value="cover" ${folder.coverFit === "cover" ? "selected" : ""}>Crop to frame</option><option value="contain" ${folder.coverFit === "contain" ? "selected" : ""}>Show full</option></select></label>
+        <label><span>Photo fit</span><select class="sb-folder-field" data-folder-id="${folder.id}" data-col="image_fit"><option value="cover" ${folder.imageFit === "cover" ? "selected" : ""}>Crop to frame</option><option value="contain" ${folder.imageFit === "contain" ? "selected" : ""}>Show full</option></select></label>
+        <label><span>Photo width</span><input type="number" min="140" max="520" class="sb-folder-field" data-folder-id="${folder.id}" data-col="photo_width" value="${folder.photoWidth}"></label>
+        <label><span>Photo height</span><input type="number" min="120" max="420" class="sb-folder-field" data-folder-id="${folder.id}" data-col="photo_height" value="${folder.photoHeight}"></label>
+      </div>
+      <div class="nested-list">
+        <strong>Photos in this folder</strong>
+        ${folder.photos.map((photo) => `
+          <div class="repeat-item photo-editor" data-photo-id="${photo.id}">
+            <label><span>Photo label</span><input class="sb-photo-field" data-photo-id="${photo.id}" data-col="label" value="${escapeAttribute(photo.label)}"></label>
+            <label><span>Photo URL</span><input class="sb-photo-field" data-photo-id="${photo.id}" data-col="image" value="${isDataUrl(photo.image) ? "" : escapeAttribute(photo.image)}" placeholder="${isDataUrl(photo.image) ? "Uploaded image saved" : ""}"></label>
+            <img class="image-preview" src="${escapeAttribute(photo.image)}" alt="" loading="lazy">
+            <input type="file" accept="image/*" data-sb-photo-image="${photo.id}">
+            <button class="button danger" type="button" data-sb-remove-photo="${photo.id}">Remove photo</button>
+          </div>
+        `).join("")}
+        <button class="button button-ghost" type="button" data-sb-add-photo="${folder.id}">Add photo to this folder</button>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button class="button button-primary" type="button" data-sb-save-folder="${folder.id}">Save folder</button>
+        <button class="button danger" type="button" data-sb-remove-folder="${folder.id}">Remove folder</button>
       </div>
     </div>
+  `).join("");
+
+  return `
+    <div class="field-group">
+      <p class="form-note">Folders and photos are saved directly to Supabase. Click "Save folder" after making changes.</p>
+      ${rows}
+      <button class="button button-ghost" type="button" id="sbAddFolder">Add vehicle folder</button>
+    </div>
   `;
 }
 
-function readAdminFields() {
-  document.querySelectorAll("[data-field]").forEach((field) => {
-    setByPath(site, field.dataset.field, field.value);
+function bindGalleryAdminButtons() {
+  // Save folder
+  document.querySelectorAll("[data-sb-save-folder]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const folderId = btn.dataset.sbSaveFolder;
+      const data = readFolderFields(folderId);
+      try {
+        setAdminStatus("Saving folder...");
+        await sbUpdate("gallery_folders", folderId, data);
+        // Also save all photo fields in this folder
+        const photoItems = document.querySelectorAll(`[data-sb-add-photo="${folderId}"]`);
+        const photosInFolder = document.querySelectorAll(`.repeat-item[data-photo-id]`);
+        const savePromises = [];
+        photosInFolder.forEach((item) => {
+          const photoId = item.dataset.photoId;
+          const photoData = readPhotoFields(photoId);
+          savePromises.push(sbUpdate("gallery_photos", photoId, photoData));
+        });
+        await Promise.all(savePromises);
+        await loadSupabaseData();
+        renderSite();
+        renderAdminFields();
+        setAdminStatus("Folder saved to Supabase.");
+      } catch (err) {
+        setAdminStatus("Could not save folder: " + err.message, true);
+      }
+    });
   });
-  document.querySelectorAll("[data-image-url-field]").forEach((field) => {
-    const value = field.value.trim();
-    if (value) setByPath(site, field.dataset.imageUrlField, value);
+
+  // Remove folder
+  document.querySelectorAll("[data-sb-remove-folder]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      if (!confirm("Remove this folder and all its photos?")) return;
+      const folderId = btn.dataset.sbRemoveFolder;
+      try {
+        setAdminStatus("Removing folder...");
+        // Delete photos first
+        const photoIds = supabasePhotos.filter((p) => p.folder_id === Number(folderId) || p.folder_id === folderId).map((p) => p.id);
+        await Promise.all(photoIds.map((id) => sbDelete("gallery_photos", id)));
+        await sbDelete("gallery_folders", folderId);
+        await loadSupabaseData();
+        renderSite();
+        renderAdminFields();
+        setAdminStatus("Folder removed.");
+      } catch (err) {
+        setAdminStatus("Could not remove folder: " + err.message, true);
+      }
+    });
   });
-  document.querySelectorAll("[data-list-field]").forEach((field) => {
-    const path = field.dataset.listField;
-    let value = field.value;
-    if (path.endsWith(".features")) value = value.split("\n").map((item) => item.trim()).filter(Boolean);
-    if (path.endsWith(".featured")) value = value === "true";
-    if (path.endsWith(".coverWidth") || path.endsWith(".coverHeight") || path.endsWith(".photoWidth") || path.endsWith(".photoHeight")) value = Number(value);
-    setByPath(site, path, value);
+
+  // Add photo to folder
+  document.querySelectorAll("[data-sb-add-photo]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const folderId = btn.dataset.sbAddPhoto;
+      try {
+        setAdminStatus("Adding photo...");
+        await sbInsert("gallery_photos", { folder_id: folderId, label: "New photo", image: "assets/detail-bay.svg" });
+        await loadSupabaseData();
+        renderSite();
+        renderAdminFields();
+        setAdminStatus("Photo added.");
+      } catch (err) {
+        setAdminStatus("Could not add photo: " + err.message, true);
+      }
+    });
+  });
+
+  // Remove photo
+  document.querySelectorAll("[data-sb-remove-photo]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      if (!confirm("Remove this photo?")) return;
+      const photoId = btn.dataset.sbRemovePhoto;
+      try {
+        setAdminStatus("Removing photo...");
+        await sbDelete("gallery_photos", photoId);
+        await loadSupabaseData();
+        renderSite();
+        renderAdminFields();
+        setAdminStatus("Photo removed.");
+      } catch (err) {
+        setAdminStatus("Could not remove photo: " + err.message, true);
+      }
+    });
+  });
+
+  // Add new folder
+  const addFolderBtn = document.getElementById("sbAddFolder");
+  if (addFolderBtn) {
+    addFolderBtn.addEventListener("click", async () => {
+      try {
+        setAdminStatus("Adding folder...");
+        const [newFolder] = await sbInsert("gallery_folders", {
+          title: "New vehicle folder",
+          vehicle: "Vehicle name",
+          description: "Describe this car and the detail work shown.",
+          cover_image: "assets/detail-bay.svg",
+          cover_width: 260,
+          cover_height: 260,
+          cover_fit: "cover",
+          photo_width: 240,
+          photo_height: 180,
+          image_fit: "cover"
+        });
+        // Add a starter photo
+        await sbInsert("gallery_photos", { folder_id: newFolder.id, label: "New photo", image: "assets/detail-bay.svg" });
+        await loadSupabaseData();
+        renderSite();
+        renderAdminFields();
+        setAdminStatus("Folder added. Fill in the details and click Save folder.");
+      } catch (err) {
+        setAdminStatus("Could not add folder: " + err.message, true);
+      }
+    });
+  }
+
+  // File uploads for folder cover images
+  document.querySelectorAll("[data-sb-folder-image]").forEach((input) => {
+    input.addEventListener("change", async () => {
+      const file = input.files[0];
+      if (!file) return;
+      const folderId = input.dataset.sbFolderImage;
+      setAdminStatus("Uploading cover image...");
+      try {
+        const dataUrl = await compressImage(file);
+        await sbUpdate("gallery_folders", folderId, { cover_image: dataUrl });
+        await loadSupabaseData();
+        renderSite();
+        renderAdminFields();
+        setAdminStatus("Cover image saved.");
+      } catch (err) {
+        setAdminStatus("Could not upload image: " + err.message, true);
+      } finally {
+        input.value = "";
+      }
+    });
+  });
+
+  // File uploads for individual photos
+  document.querySelectorAll("[data-sb-photo-image]").forEach((input) => {
+    input.addEventListener("change", async () => {
+      const file = input.files[0];
+      if (!file) return;
+      const photoId = input.dataset.sbPhotoImage;
+      setAdminStatus("Uploading photo...");
+      try {
+        const dataUrl = await compressImage(file);
+        await sbUpdate("gallery_photos", photoId, { image: dataUrl });
+        await loadSupabaseData();
+        renderSite();
+        renderAdminFields();
+        setAdminStatus("Photo saved.");
+      } catch (err) {
+        setAdminStatus("Could not upload photo: " + err.message, true);
+      } finally {
+        input.value = "";
+      }
+    });
   });
 }
 
+function readFolderFields(folderId) {
+  const data = {};
+  document.querySelectorAll(`.sb-folder-field[data-folder-id="${folderId}"]`).forEach((field) => {
+    let value = field.value;
+    if (["cover_width", "cover_height", "photo_width", "photo_height"].includes(field.dataset.col)) value = Number(value);
+    data[field.dataset.col] = value;
+  });
+  return data;
+}
+
+function readPhotoFields(photoId) {
+  const data = {};
+  document.querySelectorAll(`.sb-photo-field[data-photo-id="${photoId}"]`).forEach((field) => {
+    data[field.dataset.col] = field.value;
+  });
+  return data;
+}
+
+// ─── Reviews admin (Supabase) ─────────────────────────────────────────────────
+function renderReviewsFields() {
+  const rows = supabaseReviews.map((review) => `
+    <div class="repeat-item" data-review-id="${review.id}">
+      <label><span>Customer name</span><input class="sb-review-field" data-review-id="${review.id}" data-col="name" value="${escapeAttribute(review.name)}"></label>
+      <label><span>Quote</span><textarea rows="3" class="sb-review-field" data-review-id="${review.id}" data-col="quote">${escapeHtml(review.quote)}</textarea></label>
+      <div style="display:flex;gap:10px">
+        <button class="button button-primary" type="button" data-sb-save-review="${review.id}">Save review</button>
+        <button class="button danger" type="button" data-sb-remove-review="${review.id}">Remove</button>
+      </div>
+    </div>
+  `).join("");
+
+  return `
+    <div class="field-group">
+      <p class="form-note">Reviews are saved directly to Supabase. Click "Save review" after editing.</p>
+      ${rows}
+      <button class="button button-ghost" type="button" id="sbAddReview">Add review</button>
+    </div>
+  `;
+}
+
+function bindReviewsAdminButtons() {
+  // Save review
+  document.querySelectorAll("[data-sb-save-review]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const reviewId = btn.dataset.sbSaveReview;
+      const data = {};
+      document.querySelectorAll(`.sb-review-field[data-review-id="${reviewId}"]`).forEach((field) => {
+        data[field.dataset.col] = field.value;
+      });
+      try {
+        setAdminStatus("Saving review...");
+        await sbUpdate("reviews", reviewId, data);
+        await loadSupabaseData();
+        renderSite();
+        renderAdminFields();
+        setAdminStatus("Review saved.");
+      } catch (err) {
+        setAdminStatus("Could not save review: " + err.message, true);
+      }
+    });
+  });
+
+  // Remove review
+  document.querySelectorAll("[data-sb-remove-review]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      if (!confirm("Remove this review?")) return;
+      const reviewId = btn.dataset.sbRemoveReview;
+      try {
+        setAdminStatus("Removing review...");
+        await sbDelete("reviews", reviewId);
+        await loadSupabaseData();
+        renderSite();
+        renderAdminFields();
+        setAdminStatus("Review removed.");
+      } catch (err) {
+        setAdminStatus("Could not remove review: " + err.message, true);
+      }
+    });
+  });
+
+  // Add review
+  const addReviewBtn = document.getElementById("sbAddReview");
+  if (addReviewBtn) {
+    addReviewBtn.addEventListener("click", async () => {
+      try {
+        setAdminStatus("Adding review...");
+        await sbInsert("reviews", { name: "Customer name", quote: "Customer quote." });
+        await loadSupabaseData();
+        renderSite();
+        renderAdminFields();
+        setAdminStatus("Review added. Fill it in and click Save review.");
+      } catch (err) {
+        setAdminStatus("Could not add review: " + err.message, true);
+      }
+    });
+  }
+}
+
+// ─── Hard-coded admin field buttons ──────────────────────────────────────────
 function bindAdminFieldButtons() {
   document.querySelectorAll("[data-add]").forEach((button) => {
     button.addEventListener("click", () => {
       readAdminFields();
       addItem(button.dataset.add);
-      saveSite();
       renderSite();
       renderAdminFields();
     });
@@ -746,29 +984,6 @@ function bindAdminFieldButtons() {
       readAdminFields();
       const [key, index] = button.dataset.remove.split(".");
       site[key].splice(Number(index), 1);
-      saveSite();
-      renderSite();
-      renderAdminFields();
-    });
-  });
-  document.querySelectorAll("[data-add-photo]").forEach((button) => {
-    button.addEventListener("click", () => {
-      readAdminFields();
-      site.galleryFolders[Number(button.dataset.addPhoto)].photos.push({ label: "New photo", image: "assets/detail-bay.svg" });
-      saveSite();
-      renderSite();
-      renderAdminFields();
-    });
-  });
-  document.querySelectorAll("[data-remove-photo]").forEach((button) => {
-    button.addEventListener("click", () => {
-      readAdminFields();
-      const [folderIndex, photoIndex] = button.dataset.removePhoto.split(".").map(Number);
-      site.galleryFolders[folderIndex].photos.splice(photoIndex, 1);
-      if (!site.galleryFolders[folderIndex].photos.length) {
-        site.galleryFolders[folderIndex].photos.push({ label: "Detail photo", image: site.galleryFolders[folderIndex].coverImage });
-      }
-      saveSite();
       renderSite();
       renderAdminFields();
     });
@@ -781,28 +996,12 @@ function bindAdminFieldButtons() {
       try {
         localStorage.setItem(PASSWORD_KEY, next);
         document.getElementById("newPassword").value = "";
-        setAdminStatus("Password updated and saved.");
+        setAdminStatus("Password updated.");
       } catch {
-        setAdminStatus("Password could not be saved in this browser.", true);
+        setAdminStatus("Password could not be saved.", true);
       }
     });
   }
-  const copyBackup = document.getElementById("copyBackup");
-  if (copyBackup) copyBackup.addEventListener("click", () => {
-    readAdminFields();
-    document.getElementById("backupBox").value = JSON.stringify(site, null, 2);
-  });
-  const importBackup = document.getElementById("importBackup");
-  if (importBackup) importBackup.addEventListener("click", () => {
-    try {
-      site = mergeDeep(structuredClone(defaults), JSON.parse(document.getElementById("backupBox").value));
-      saveSite();
-      renderSite();
-      renderAdminFields();
-    } catch {
-      alert("That content could not be imported. Check the JSON formatting.");
-    }
-  });
 }
 
 function bindImageInputs() {
@@ -815,12 +1014,11 @@ function bindImageInputs() {
       try {
         const result = await compressImage(file);
         setByPath(site, input.dataset.imageUpload, result);
-        saveSite();
         renderSite();
         updateImageUploadPreview(input, result);
-        setAdminStatus("Photo uploaded and saved.");
+        setAdminStatus("Photo uploaded.");
       } catch {
-        setAdminStatus("That photo could not be uploaded. Try a smaller image file.", true);
+        setAdminStatus("That photo could not be uploaded. Try a smaller file.", true);
       } finally {
         input.value = "";
       }
@@ -834,23 +1032,9 @@ function addItem(key) {
     aboutPoints: "New about point",
     highlights: "New highlight",
     services: { name: "New service", price: "From $0", description: "Describe this service.", features: ["Feature one"], featured: false },
-    process: { title: "New step", text: "Describe this step." },
-    galleryFolders: {
-      title: "New vehicle folder",
-      vehicle: "Vehicle name",
-      description: "Describe this car and the detail work shown.",
-      coverImage: "assets/detail-bay.svg",
-      coverWidth: 260,
-      coverHeight: 240,
-      coverFit: "cover",
-      photoWidth: 240,
-      photoHeight: 180,
-      imageFit: "cover",
-      photos: [{ label: "New photo", image: "assets/detail-bay.svg" }]
-    },
-    reviews: { name: "Customer name", quote: "Customer quote." }
+    process: { title: "New step", text: "Describe this step." }
   };
-  site[key].push(structuredClone(templates[key]));
+  if (templates[key]) site[key].push(structuredClone(templates[key]));
 }
 
 function updateImageUploadPreview(input, value) {
@@ -864,6 +1048,33 @@ function updateImageUploadPreview(input, value) {
   }
 }
 
+// ─── Field reading ────────────────────────────────────────────────────────────
+function readAdminFields() {
+  document.querySelectorAll("[data-field]").forEach((field) => {
+    setByPath(site, field.dataset.field, field.value);
+  });
+  document.querySelectorAll("[data-image-url-field]").forEach((field) => {
+    const value = field.value.trim();
+    if (value) setByPath(site, field.dataset.imageUrlField, value);
+  });
+  document.querySelectorAll("[data-list-field]").forEach((field) => {
+    const path = field.dataset.listField;
+    let value = field.value;
+    if (path.endsWith(".features")) value = value.split("\n").map((item) => item.trim()).filter(Boolean);
+    if (path.endsWith(".featured")) value = value === "true";
+    setByPath(site, path, value);
+  });
+}
+
+// ─── Admin status ─────────────────────────────────────────────────────────────
+function setAdminStatus(message, isError = false) {
+  const status = document.getElementById("adminStatus");
+  if (!status) return;
+  status.textContent = message;
+  status.classList.toggle("is-error", isError);
+}
+
+// ─── Image compression ────────────────────────────────────────────────────────
 function compressImage(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -894,42 +1105,9 @@ function compressDataUrl(dataUrl) {
   });
 }
 
-async function optimizeStoredImages() {
-  const paths = [
-    "heroImage",
-    "aboutImage",
-    ...site.galleryFolders.flatMap((folder, folderIndex) => [
-      `galleryFolders.${folderIndex}.coverImage`,
-      ...folder.photos.map((_, photoIndex) => `galleryFolders.${folderIndex}.photos.${photoIndex}.image`)
-    ])
-  ];
-  let changed = false;
-  for (const path of paths) {
-    const value = getByPath(site, path);
-    if (!isDataUrl(value) || value.length < 600000) continue;
-    try {
-      setByPath(site, path, await compressDataUrl(value));
-      changed = true;
-    } catch {
-      // Keep the original if the browser cannot decode this image.
-    }
-  }
-  if (changed) {
-    saveSite();
-    renderSite();
-    setAdminStatus("Large saved photos were optimized.");
-  }
-}
-
+// ─── Utilities ────────────────────────────────────────────────────────────────
 function isDataUrl(value) {
   return typeof value === "string" && value.startsWith("data:image/");
-}
-
-function setAdminStatus(message, isError = false) {
-  const status = document.getElementById("adminStatus");
-  if (!status) return;
-  status.textContent = message;
-  status.classList.toggle("is-error", isError);
 }
 
 function getByPath(source, path) {
@@ -941,17 +1119,6 @@ function setByPath(source, path, value) {
   const last = parts.pop();
   const target = parts.reduce((obj, key) => obj[key], source);
   target[last] = value;
-}
-
-function mergeDeep(target, source) {
-  Object.keys(source).forEach((key) => {
-    if (source[key] && typeof source[key] === "object" && !Array.isArray(source[key])) {
-      target[key] = mergeDeep(target[key] || {}, source[key]);
-    } else {
-      target[key] = source[key];
-    }
-  });
-  return target;
 }
 
 function titleCase(value) {
