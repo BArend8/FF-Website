@@ -126,7 +126,7 @@ Both Braedyn and Cole stay busy with school, but their commitment to quality nev
     { value: "Mobile", label: "We come to you" }
   ],
   aboutPoints: ["Owner-operated service", "Paint-safe process", "Clear quotes before work starts"],
-  highlights: ["Exterior details", "Interior resets", "Ceramic protection", "Fleet-ready cleaning"],
+  highlights: ["Exterior details", "Interior resets", "Wax protection", "Fleet-ready cleaning"],
   services: [
     {
       name: "Basic Interior",
@@ -146,7 +146,7 @@ Both Braedyn and Cole stay busy with school, but their commitment to quality nev
       name: "Premium Interior",
       price: "From $165",
       description: "2.5 Hours - 3 Hours",
-      features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Water vacuum mixed with our stain remover on all cloth", "UV protectant coating on all vinyl and plastics", "Leather conditioning", "Attention to specific interior eye sores"],
+      features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Water vacuum mixed with our stain remover on all cloth", "Carpet reset", "UV protectant coating on all vinyl and plastics", "Leather conditioning", "Attention to specific interior eye sores"],
       featured: false
     },
      {
@@ -160,7 +160,7 @@ Both Braedyn and Cole stay busy with school, but their commitment to quality nev
       name: "Premium Package",
       price: "From $250",
       description: "3.5 Hours - 4 Hours",
-      features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Water vacuum mixed with our stain remover on all cloth", "UV protectant coating on all vinyl and plastics", "Leather conditioning", "Attention to specific interior eye sores", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores"],
+      features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Water vacuum mixed with our stain remover on all cloth", "Carpet reset", "UV protectant coating on all vinyl and plastics", "Leather conditioning", "Attention to specific interior eye sores", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores"],
       featured: true
     },
     {
