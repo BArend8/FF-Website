@@ -5,6 +5,7 @@ const UPLOAD_MAX_SIZE = 1400;
 const UPLOAD_QUALITY = 0.78;
 
 const defaults = {
+  logoImage: "",
   businessName: "Redline Auto Detailing",
   businessInitials: "RA",
   businessTagline: "Deep gloss. Clean finish. Every time.",
@@ -153,11 +154,12 @@ let site = loadSite();
 let activeTab = "Brand";
 
 const sections = {
-  Brand: [
+Brand: [
     ["businessName", "Business name"],
-    ["businessInitials", "Logo initials"],
+    ["businessInitials", "Logo initials (shown when no logo image is set)"],
     ["businessTagline", "Small tagline"],
-    ["footerText", "Footer text"]
+    ["footerText", "Footer text"],
+    ["logoImage", "Logo image", "image"]
   ],
   Navigation: [
     ["navAbout", "About label"],
@@ -289,6 +291,18 @@ function renderSite() {
     const key = node.dataset.image;
     if (site[key]) node.src = site[key];
   });
+  const logoImg = document.getElementById("logoImg");
+  const brandInitials = document.getElementById("brandInitials");
+  if (logoImg && brandInitials) {
+    if (site.logoImage) {
+      logoImg.src = site.logoImage;
+      logoImg.style.display = "block";
+      brandInitials.style.display = "none";
+    } else {
+      logoImg.style.display = "none";
+      brandInitials.style.display = "";
+    }
+  }
   const phoneLink = document.querySelector('[data-link="phone"]');
   const emailLink = document.querySelector('[data-link="email"]');
   if (phoneLink) phoneLink.href = `tel:${site.phoneHref}`;
