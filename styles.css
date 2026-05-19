@@ -848,6 +848,7 @@ textarea {
 [data-link="instagram"] {
   display: inline-flex;
   align-items: center;
+  color: var(--text);
   gap: 8px;
 }
 
