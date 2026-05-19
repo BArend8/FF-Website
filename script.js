@@ -459,7 +459,7 @@ function renderReviews() {
       <h3>${escapeHtml(review.name)}</h3>
       <p>${escapeHtml(review.quote)}</p>
     </article>
-  `).join("");
+  `).join("");xx
 }
 
 function renderServiceOptions() {
