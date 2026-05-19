@@ -10,7 +10,10 @@
   <body>
     <header class="site-header">
       <a class="brand" href="#top" aria-label="Home">
-        <span class="brand-mark" data-bind="businessInitials">RA</span>
+        <span class="brand-mark" id="brandMark">
+          <img id="logoImg" data-image="logoImage" src="" alt="Logo" style="display:none;width:100%;height:100%;object-fit:contain;border-radius:inherit;">
+          <span id="brandInitials" data-bind="businessInitials">RA</span>
+        </span>
         <span>
           <strong data-bind="businessName">Redline Auto Detailing</strong>
           <small data-bind="businessTagline">Deep gloss. Clean finish. Every time.</small>
