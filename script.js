@@ -155,7 +155,7 @@ const defaults = {
       price: "From $250",
       description: "3.5 Hours - 4 Hours",
       features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Water vacuum mixed with our stain remover on all cloth", "UV protectant coating on all vinyl and plastics", "Leather conditioning", "Attention to specific interior eye sores", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores"],
-      featured: false
+      featured: true
     },
     {
       name: "Wax Coating",
