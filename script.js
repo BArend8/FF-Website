@@ -1,6 +1,6 @@
 // ─── Supabase config ────────────────────────────────────────────────────────
-const SUPABASE_URL = "https://belcwyvweawhjiyrenZf.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlbGN3eXZ3ZWF3aGppeXJlbnpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNTkyMzMsImV4cCI6MjA5NDczNTIzM30.9_8e7dnRCJZpNi5d3H6JTbFcUou3zFm6BSCNq3ZCKN0";
+const SUPABASE_URL = "https://belcwyvweawhjiyrenzf.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_48klcGVCtrNivB5QocSshA_KtZyaHI4";
 
 async function sbFetch(path) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
