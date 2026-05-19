@@ -459,7 +459,7 @@ function renderReviews() {
       <h3>${escapeHtml(review.name)}</h3>
       <p>${escapeHtml(review.quote)}</p>
     </article>
-  `).join("");
+  `).join("");xx
 }
 
 function renderServiceOptions() {
@@ -749,8 +749,8 @@ function bindGalleryAdminButtons() {
         setAdminStatus("Saving folder...");
         await sbUpdate("gallery_folders", folderId, data);
         // Also save all photo fields in this folder
-        const photoItems = document.querySelectorAll(`[data-sb-add-photo="${folderId}"]`);
-        const photosInFolder = document.querySelectorAll(`.repeat-item[data-photo-id]`);
+        const folderItem = document.querySelector(`.repeat-item[data-folder-id="${folderId}"]`);
+        const photosInFolder = folderItem ? folderItem.querySelectorAll(`.repeat-item[data-photo-id]`) : [];
         const savePromises = [];
         photosInFolder.forEach((item) => {
           const photoId = item.dataset.photoId;
