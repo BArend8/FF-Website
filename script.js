@@ -76,7 +76,7 @@ const defaults = {
   heroText: "Paint-safe washes, interior resets, Wax finishes, and finishing work for drivers who care about the details.",
   primaryCta: "Book a detail",
   secondaryCta: "View packages",
-  heroImage: "assets/hero.jpg",
+  heroImage: "https://res.cloudinary.com/djzzklirv/image/upload/v1779174477/2025_Jeep_Wagoneer_7_yivntq.jpg",
   servicesKicker: "Packages",
   servicesTitle: "Choose the finish your vehicle deserves.",
   servicesIntro: "Condition of vehicle has no effect on price. The vehicles final look is a reflection of the package chosen.",
