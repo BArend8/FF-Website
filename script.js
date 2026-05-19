@@ -499,6 +499,10 @@ function bindAdmin() {
   document.querySelectorAll("[data-admin-close]").forEach((button) => {
     button.addEventListener("click", closeAdmin);
   });
+  document.getElementById("adminShell").addEventListener("click", (e) => {
+    if (e.target === document.getElementById("adminShell")) closeAdmin();
+});
+  });
   document.getElementById("loginButton").addEventListener("click", login);
   document.getElementById("passwordInput").addEventListener("keydown", (event) => {
     if (event.key === "Enter") login();
