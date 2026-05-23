@@ -82,7 +82,7 @@ const defaults = {
   servicesIntro: "Condition of vehicle has no effect on price. The vehicles final look is a reflection of the package chosen.",
   aboutKicker: "Meet the detailer",
   aboutTitle: "A little about the person behind the polish.",
-  aboutText: `Meet Braedyn Arend and Cole Lausch, the two guys behind Fresh Finishes Mobile Auto Detailing. Braedyn is a sophmore at Michigan State University studying computer science, and Cole is a sophmore at Western Michigan University studying accounting. Despite their busy schedules, they share one passion that started long before college — keeping their cars looking exactly the way they did the day they drove them off the lot.
+  aboutText: `Meet Braedyn Arend and Cole Lausch, the two guys behind Fresh Finishes Mobile Auto Detailing. Braedyn is a sophomore at Michigan State University studying computer science, and Cole is a sophomore at Western Michigan University studying accounting. Despite their busy schedules, they share one passion that started long before college — keeping their cars looking exactly the way they did the day they drove them off the lot.
 
 That obsession is what built this business. Long before Fresh Finishes had a name, they were spending weekends in the driveway, testing products, refining techniques, and making sure every panel, every wheel, and every line of trim looked showroom-perfect.
 
