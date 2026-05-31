@@ -165,9 +165,9 @@ We both stay busy with school, but our commitment to quality never takes a back 
     },
     {
       name: "Wax Coating",
-      price: "From $250",
+      price: "From $230",
       description: "4.5 Hours - 5 Hours",
-      features: ["Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores", "Hand-applied premium wax coating on entire exterior paint"],
+      features: ['Full premium exterior detail", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores", "Hand-applied premium wax coating on entire exterior paint"],
       featured: false
     }
     
