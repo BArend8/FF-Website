@@ -164,10 +164,10 @@ We both stay busy with school, but our commitment to quality never takes a back 
       featured: true
     },
     {
-      name: "Wax Coating",
-      price: "From $230",
+      name: "Polishing + Wax Coating",
+      price: "From $320",
       description: "4.5 Hours - 5 Hours",
-      features: ["Full premium exterior detail", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores", "Hand-applied premium wax coating on entire exterior paint"],
+      features: ["Full premium exterior detail", "Erase swirl marks", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores", "Hand-applied premium wax coating on entire exterior paint"],
       featured: false
     }
     
