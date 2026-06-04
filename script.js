@@ -131,42 +131,42 @@ We both stay busy with school, but our commitment to quality never takes a back 
     {
       name: "Basic Interior",
       price: "From $120",
-      description: "1.5 Hours - 2 Hours",
+      description: "A thorough interior refresh to get your car clean and comfortable from basic wear or light traces of debris",
       features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass"],
       featured: false
     },
     {
       name: "Basic Package",
       price: "From $170",
-      description: "2 Hours - 2.5 Hours",
+      description: "The complete everyday clean. Everything in our Basic Interior plus a full exterior hand wash",
       features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning"],
       featured: false
     },
     {
       name: "Premium Interior",
       price: "From $165",
-      description: "2.5 Hours - 3 Hours",
+      description: "Road trips, kids, pets, spilled drinks, mystery stains you stopped questioning — life happens in your car. Our Premium Interior detail is a full reset.",
       features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Water vacuum mixed with our stain remover on all cloth", "Carpet reset", "UV protectant coating on all vinyl and plastics", "Leather conditioning", "Attention to specific interior eye sores"],
       featured: false
     },
      {
       name: "Premium Exterior",
       price: "From $85",
-      description: "1 Hours",
+      description: "There's something about a car that's truly clean on the outside — the way the sun hits the paint, the way people glance as you drive by. Our Premium Exterior goes far beyond a basic wash",
       features: ["Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores"],
       featured: false
     },
      {
       name: "Premium Package",
       price: "From $250",
-      description: "3.5 Hours - 4 Hours",
+      description: "You remember the feeling of driving it off the lot for the first time — that smell, that shine, that pride. Our Premium Package brings that feeling back. Combining our full Premium Interior and Premium Exterior services, this is the most complete transformation we offer.",
       features: ["Entire vehicle vacuum", "steam clean mixed with our premium interior cleaner solution", "Invisible glass", "Water vacuum mixed with our stain remover on all cloth", "Carpet reset", "UV protectant coating on all vinyl and plastics", "Leather conditioning", "Attention to specific interior eye sores", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores"],
       featured: true
     },
     {
       name: "Polishing + Wax Coating",
       price: "From $320",
-      description: "4.5 Hours - 5 Hours",
+      description: "Every drive leaves a mark — swirl marks from brushes, light scratches from parking lots, dullness from months of sun and rain. Our Polishing & Waxing package is about restoration and protection. Machine polishing carefully buffs away the damage and brings your paint's true depth back to life, then a machine applied wax seals it all in for lasting shine and protection against whatever the road throws at you next",
       features: ["Full premium exterior detail", "Erase swirl marks", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores", "Hand-applied premium wax coating on entire exterior paint"],
       featured: false
     }
