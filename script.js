@@ -167,7 +167,7 @@ We both stay busy with school, but our commitment to quality never takes a back 
       name: "Polishing + Wax Coating",
       price: "From $280",
       description: "Every drive leaves a mark — swirl marks from brushes, light scratches from parking lots, dullness from months of sun and rain. Our Polishing & Waxing package is about restoration and protection. Machine polishing carefully buffs away the damage and brings your paint's true depth back to life, then a machine applied wax seals it all in for lasting shine and protection against whatever the road throws at you next",
-      features: ["Full premium exterior detail", "Erase swirl marks", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores", "Hand-applied premium wax coating on entire exterior paint"],
+      features: ["Full premium exterior detail", "Erase swirl marks", "Invisible glass", "Exterior foam rinse and hand wash", "Wheel and rim cleaning", "Clay bar decontamination", "Tire shine", "UV protectant coating on all exterior plastics and vinyls", "Bug gut remover", "Attention to specific exterior eye sores", "Premium wax coating on entire exterior paint"],
       featured: false
     }
     
